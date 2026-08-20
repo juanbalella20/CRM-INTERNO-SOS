@@ -19,3 +19,17 @@ El CRM SOS será concebido como una herramienta transversal, y noexclusivamente 
 Producto y Dirección
 
 A priori buscamos que este sea para uso interno, pero a la larga debera ser posible venderlo a clientes nuestros que les pueda llegar a servir para sus negocios
+
+Nota: 
+  - Todavia no esta hecha la funcionabilidad de que SOS sepa que clientes fueron dados de baja(entiendo yo)
+
+  - Para un MVP se priorizan llegar a las siguientes funcionabilidades
+        * Debe ser multiempresa
+
+        * Ficha unificada
+
+        * Prospectos / clientes
+
+        * Historial de interacciones
+
+

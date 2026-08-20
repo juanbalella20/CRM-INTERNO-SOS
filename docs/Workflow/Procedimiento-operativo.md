@@ -1,0 +1,2 @@
+PO-01. Consulta previa de la ficha antes de un nuevo contacto
+Antes de realizar un nuevo contacto con un prospecto, el operador deberá consultar su ficha unificada y revisar el historial disponible. Por el momento se interpreta como una pauta de procedimiento operativo para el equipo, no como un bloqueo técnico obligatorio del sistema. Su finalidad es que el nuevo contacto se realice con contexto suficiente y evitando repetir acciones, mensajes o gestiones ya realizadas.
