@@ -70,11 +70,21 @@ El sistema debe permitir registrar cada interacción asociada a un prospecto.
 
 
 
-**RF-05** Se debera generar alertas a los Usuarios de actividades pendientes a realizar,como proxima accion vencida de uno o N prospectos, o proxima a vencerse, (a lo mejor si un cliente se da de baja, y lo podemos saber desde SOS, poder notificarlo tambien)
+**RF-05** Filtrado por acciones
+ Se debera generar alertas a los Usuarios de actividades pendientes a realizar,como proxima accion vencida de uno o N prospectos, o proxima a vencerse, (a lo mejor si un cliente se da de baja, y lo podemos saber desde SOS, poder notificarlo tambien)
+
+**RF-06** Debo poder filtrar a los prospectos segun la urgencia que lleva tomar una acicon sobre ellos
 
 
+
+
+**RF-07** un motor de reglas debe poder generar reglas dado ciertos parametros (Post mvp)
+
+**RF-08** Las proximas acciones a realizar junto con los prospectos deben estar ordenadas por fecha de vencimiento, la que este mas cerca de vencerse, sera la jque este mas arriba
 ### Requisitos de integracion
 
 **RI-01** Se debe poder integrar con el sistema de SOS, para poder obtener la tabla de usuarios-la tabla de prospectos
 
 **RI-02** El sistema debe estar abierto a la integracion de cualquier API externo 
+
+NO IMPORTA PERMISOS AHORA, PERO SI TENRLO EN CUANTO AL CODEAR

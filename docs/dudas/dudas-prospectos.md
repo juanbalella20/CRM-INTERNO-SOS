@@ -12,5 +12,8 @@ Que signfica en que etapa se encuentra?
 Faltante, porque se dio de bajo si se dio de baja
 
 
-- Ya existe la tabla de prospectos en SOS? entonces si SI, vale la pena hacer una nueva entonces?
+- Ya existe la tabla de prospectos en SOS? entonces si SI, vale la pena hacer una nueva entonces?-> hay que hacerla
+------------------------------------------------------------------------------------------------------------------
 
+- Habiamos hablado que los estados iban a ser manejables por el usuario (osea pueden ser personalizables), que pasa si de sos viene un estado, y se persononlizo un estado que difiiere de los ya hechos
+  - salvo que los estados se sobrescriban al de sos, osea, existe un estado CLIENTE FREE, yo le doy como oportunidad al usuario de que cliente FREE, se llame -> CLIENTE DE USO GRATUITO, entonces solo se deberia modificar lo que se muestra en el fron
