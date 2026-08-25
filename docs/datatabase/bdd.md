@@ -1,91 +1,189 @@
-# Modelo de datos — CRM Interno SOS
+# Base de datos — CRM Interno SOS
 
+## Introducción
 
-## Núcleo comercial: Prospecto, Producto, Estado, Oportunidad
+Esta base de datos respalda el CRM interno de SOS. Su objetivo es registrar los
+prospectos y las empresas con las que trabaja la organización, las personas
+usuarias del sistema y cada interacción comercial.
 
-### El problema
+El núcleo comercial parte del producto: cada interacción trata sobre un producto,
+el producto tiene un estado actual y ese estado determina las próximas acciones
+predeterminadas.
 
-La empresa vende varios productos de software. Un mismo prospecto puede estar en
-un estado comercial distinto **para cada producto**: cliente activo del Sistema 1
-y, al mismo tiempo, en primer contacto por el Sistema 2.
+> **Convención de cardinalidades.** En este documento se usa la lectura acordada
+> para el diagrama. Por ejemplo, `A — (1,N) — relación — (1,1) — B` se lee como:
+> cada **A** tiene exactamente un **B** y cada **B** se relaciona con uno o muchos
+> **A**.
 
-Por lo tanto el estado **no es un atributo del prospecto**. Un prospecto solo no
-tiene un estado: el estado nace del cruce prospecto + producto.
+## Entidades
 
-### La solución: entidad Oportunidad
+### 1. Empresa
 
-`Oportunidad` representa el cruce **"este prospecto con este producto"**. Es la
-entidad que sostiene el estado comercial y la negociación.
+Representa a una organización con la que se trabaja. Agrupa prospectos, usuarios
+y los estados disponibles en su contexto.
 
-| id | prospecto_id | producto_id | estado_id | fecha_apertura |
-|----|--------------|-------------|-----------|----------------|
-| 1  | 1 (Juan)     | 1 (Sist. 1) | 3 (Cliente activo)  | 2026-01-10 |
-| 2  | 1 (Juan)     | 2 (Sist. 2) | 1 (Primer contacto) | 2026-03-02 |
-| 3  | 2 (Ana)      | 1 (Sist. 1) | 2 (Propuesta enviada) | 2026-02-15 |
+**Atributos**
 
-### Relaciones
+- `id`: identificador único.
+- `nombre`: nombre de la empresa.
 
-```
-Prospecto   --(1,1)-- Tiene    --(0,N)-- Oportunidad
-Producto    --(1,1)-- refiere  --(0,N)-- Oportunidad
-Estado      --(1,1)-- Esta en  --(0,N)-- Oportunidad
-Oportunidad --(1,1)-- genera   --(0,N)-- Proxima Accion
-Regla       --(0,1)-- Genera   --(0,N)-- Proxima Accion
-Estado      --(1,1)-- anterior a --(1,1)-- Estado
-```
+### 2. Prospecto
 
-Lectura:
+Representa a una persona o entidad potencialmente interesada en los productos.
+Las interacciones comerciales se registran sobre el prospecto.
 
-- Un prospecto tiene 0 o N oportunidades; una oportunidad pertenece a 1 y sólo 1 prospecto.
-- Un producto aparece en 0 o N oportunidades; una oportunidad refiere a 1 y sólo 1 producto.
-- Un estado aplica a 0 o N oportunidades; una oportunidad está en 1 y sólo 1 estado.
-- Una oportunidad genera 0 o N próximas acciones; una próxima acción pertenece a 1 y sólo 1 oportunidad.
-- Una regla genera 0 o N próximas acciones; una próxima acción fue generada por 0 o 1 regla.
-- `anterior a` es la autorrelación de Estado que define el orden del pipeline.
+**Atributos**
 
-### Decisiones tomadas
+- `id`: identificador único.
+- `cuit_cuil`: identificación fiscal.
+- `nombre_completo`: nombre completo del prospecto.
+- `correo`: correo de contacto.
+- `telefono`: teléfono de contacto.
+- `origen`: procedencia del prospecto.
 
-**El `(0,N)` del lado Oportunidad en `Tiene`.** La oportunidad se crea cuando
-ocurre algo real, no de antemano. No se pre-generan filas "no ofrecido" para cada
-combinación prospecto × producto: la ausencia de fila ya significa que no se le
-ofreció. La ficha del prospecto lista igual los productos con su estado — eso se
-resuelve en la consulta, no en la tabla.
+### 3. Usuario
 
-**El pipeline de estados es único.** Todos los productos comparten la misma gama
-de estados; `Estado` es un catálogo global, no uno por producto.
+Representa a una persona que utiliza el CRM y que puede ser responsable de
+interacciones.
 
-**Próxima acción siempre cuelga de una oportunidad.** `oportunidad_id` nunca es
-NULL. `regla_id` es opcional: NULL significa que la cargó una persona, con valor
-significa que la generó una regla. No es un arco exclusivo — se evitó a propósito
-el diseño con dos FK mutuamente excluyentes, donde la base no puede impedir filas
-con ambas en NULL o ambas llenas. Esto permite que la ficha del prospecto muestre
-todas sus próximas acciones juntas, sin importar el origen.
+**Atributos**
 
-### Lo que esta decisión reemplazó
+- `id`: identificador único.
+- `nombre`: nombre de la persona usuaria.
+- `correo`: correo de acceso o contacto.
+- `contraseña`: credencial de acceso.
 
-- `Etapa comercial` como atributo de Prospecto → el estado vive en la oportunidad.
-- `Prospecto --tiene-- Estado` → reemplazado por `Esta en` sobre Oportunidad.
-- `Prospecto --Tiene-- Proxima Accion` (era N:N) → reemplazado por `genera` desde Oportunidad.
-- `Estado --genera-- Proxima Accion` → reemplazado por `genera` desde Oportunidad.
+### 4. Interacción
 
-### Entidades y atributos
+Representa un contacto o evento comercial: una llamada, correo, conversación con
+el bot u otro canal. Conserva el resumen y la fecha del evento.
 
-| Entidad | Atributos |
-|---|---|
-| Producto | id, nombre |
-| Oportunidad | id, fechaApertura, fechaCierre, |
-| Estado | id, nombre |
-| Proxima Accion | id, nombre, fecha de proxima accion, estado |
-| Regla | id, Nombre, descripcion |
+**Atributos**
 
-El atributo `estado` de Proxima Accion admite: PENDIENTE, REALIZADA, VENCIDA.
+- `id`: identificador único.
+- `fecha`: fecha de la interacción.
+- `canal`: medio por el que ocurrió.
+- `resumen_interaccion`: resumen de lo conversado o realizado.
 
----
+### 5. Producto
 
-## Pendientes
+Representa un producto de software ofrecido o tratado en el CRM.
 
+**Atributos**
 
-- Definir si `Interaccion --genera-- Estado` debe apuntar ahora a Oportunidad, o eliminarse.
-- Borrar aristas sueltas residuales cerca de Usuario y las cajas de cardinalidad flotantes.
-- Historial de cambios de estado: hoy la oportunidad guarda sólo el estado actual.
-  Si se necesita medir tiempo por etapa, requiere una entidad aparte. No implementar aún.
+- `id`: identificador único.
+- `nombre`: nombre del producto.
+
+### 6. Estado
+
+Representa el estado comercial actual que tiene un producto. También funciona
+como la definición que determina las próximas acciones predeterminadas.
+
+**Atributos**
+
+- `id`: identificador único.
+- `nombre`: nombre del estado.
+
+### 7. Próxima acción
+
+Representa una tarea de seguimiento que debe realizarse a partir de un estado.
+Puede estar pendiente, realizada o vencida.
+
+**Atributos**
+
+- `id`: identificador único.
+- `nombre`: descripción corta de la acción.
+- `fecha_proxima_accion`: fecha prevista para ejecutarla.
+- `estado`: estado operativo de la acción: `PENDIENTE`, `REALIZADA` o `VENCIDA`.
+
+### 8. Regla
+
+Representa una regla que puede generar una próxima acción de forma automática.
+
+**Atributos**
+
+- `id`: identificador único.
+- `nombre`: nombre de la regla.
+- `descripcion`: explicación de su comportamiento.
+
+### 9. Tag
+
+Representa una etiqueta para clasificar usuarios. La tabla existe en la base de
+datos, aunque su uso en la aplicación queda pendiente.
+
+**Atributos**
+
+- `id`: identificador único.
+- `descripcion_funcion`: descripción o función de la etiqueta.
+
+## Relaciones
+
+### Empresa y prospecto — `TrabajaCon`
+
+Una empresa trabaja con uno o muchos prospectos. Cada prospecto pertenece a una
+sola empresa.
+
+### Empresa y usuario — `Tiene`
+
+Una empresa tiene uno o muchos usuarios. Cada usuario pertenece a una sola
+empresa.
+
+### Empresa y estado — `Crea`
+
+Una empresa crea cero o muchos estados. Cada estado corresponde a una sola
+empresa.
+
+### Prospecto e interacción — `Participa`
+
+Un prospecto participa en una o muchas interacciones. Cada interacción corresponde
+a un solo prospecto.
+
+### Usuario e interacción — `Responsabiliza`
+
+Un usuario puede ser responsable de cero o muchas interacciones. Cada interacción
+tiene exactamente un usuario responsable.
+
+### Interacción y producto — `Es sobre`
+
+Cada interacción es sobre exactamente un producto. Un producto puede aparecer en
+cero o muchas interacciones.
+
+### Producto y estado — `Tiene`
+
+Cada producto tiene exactamente un estado actual. Un estado puede estar asociado
+a cero o muchos productos.
+
+### Estado y próxima acción — `Tiene`
+
+Un estado tiene una o muchas próximas acciones predeterminadas. Cada próxima
+acción pertenece a un solo estado. Esta relación materializa la regla principal
+del modelo: **el estado define las acciones de seguimiento**.
+
+### Regla y próxima acción — `Genera`
+
+Una regla puede generar cero o muchas próximas acciones. Una próxima acción puede
+haber sido generada por cero o una regla; cuando no hay regla asociada, la acción
+no fue creada automáticamente por una regla.
+
+### Estado e interacción — `Genera`
+
+El diagrama mantiene una relación `Genera` entre Estado e Interacción: una
+interacción puede estar asociada a un estado y un estado puede relacionarse con
+cero o una interacción. Su significado funcional debe confirmarse antes de
+implementarlo como una restricción de base de datos.
+
+### Estado y estado — `Anterior a`
+
+`Estado` se relaciona consigo mismo para representar el orden del pipeline. Un
+estado puede tener, como máximo, un estado anterior.
+
+### Usuario y tag — `Tiene`
+
+Un usuario tiene cero o muchas etiquetas y una etiqueta puede asociarse con uno o
+muchos usuarios.
+
+## Relación pendiente de completar en el diagrama
+
+El rombo `Participa` situado junto a `Interacción` tiene un extremo sin entidad
+conectada. No se documenta como una relación de negocio hasta definir su segunda
+entidad y sus cardinalidades.

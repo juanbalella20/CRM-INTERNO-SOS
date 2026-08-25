@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="m7mZl2NBPWvaaUbhkKlO" name="Page-1">
-        <mxGraphModel dx="3708" dy="2664" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="2797" dy="2303" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -326,7 +326,7 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="132" value="Regla&amp;nbsp;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
-                    <mxGeometry x="-640" y="-410" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-570" y="-410" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="134" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" parent="1" source="133" target="108" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -337,7 +337,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="133" value="Genera" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="-425" y="-420" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-390" y="-420" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="135" style="edgeStyle=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.052;entryY=0.497;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="132" target="133" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -348,16 +348,16 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="136" value="id" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
-                    <mxGeometry x="-790" y="-610" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-630" y="-520" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="139" value="Nombre" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="-590" y="-610" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-520" y="-520" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="140" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.576;entryY=1.035;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="132" target="139" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="141" value="descripcion" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="-415" y="-600" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-380" y="-500" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="145" value="el estado de un prospecto determinara la accion," style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="-1330" y="-720" width="280" height="30" as="geometry"/>
@@ -453,7 +453,7 @@
                 <mxCell id="186" value="nombre" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="-830" y="70" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="301" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="180" edge="1">
+                <mxCell id="301" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="324" target="180" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="-810" y="-80" as="sourcePoint"/>
                     </mxGeometry>
@@ -499,7 +499,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="324" value="Tiene" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
-                    <mxGeometry x="-820" y="-110" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-880" y="-70" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="325" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.931;entryY=0.455;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="148" target="324">
                     <mxGeometry relative="1" as="geometry"/>
