@@ -1,4 +1,3 @@
 <svelte:head>
 	<title>Gestión de prospectos | SOS Contador</title>
 </svelte:head>
-<h1> Gestión de prospectos</h1>

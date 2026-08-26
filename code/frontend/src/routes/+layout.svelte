@@ -1,6 +1,7 @@
 <script>
 	import favicon from '$lib/assets/favicon.svg';
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Header from '$lib/components/Header.svelte'
 
 	let { children } = $props();
 </script>
@@ -12,6 +13,7 @@
 <div class="app-shell">
 	<Sidebar />
 	<main class="page-content">
+		<Header />
 		{@render children()}
 	</main>
 </div>

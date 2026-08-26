@@ -62,13 +62,13 @@
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		min-height: 50px;
+		gap: 14px;
+		min-height: 56px;
 	}
 
 	.brand img {
-		width: 48px;
-		height: 48px;
+		width: 52px;
+		height: 52px;
 		object-fit: contain;
 	}
 
@@ -79,14 +79,14 @@
 	}
 
 	.brand-title {
-		font-size: 20px;
+		font-size: 22px;
 		font-weight: 800;
 		letter-spacing: -0.02em;
 	}
 
 	.brand-subtitle {
 		margin-top: 6px;
-		font-size: 10px;
+		font-size: 11px;
 		font-weight: 500;
 		letter-spacing: 0.02em;
 	}
@@ -100,14 +100,14 @@
 
 	.navigation a {
 		box-sizing: border-box;
-		min-height: 52px;
-		padding: 10px 14px;
+		min-height: 56px;
+		padding: 11px 15px;
 		display: flex;
 		align-items: center;
 		gap: 13px;
 		border-radius: 9px;
 		color: rgba(255, 255, 255, 0.88);
-		font-size: 14px;
+		font-size: 16px;
 		font-weight: 400;
 		line-height: 1.15;
 		text-decoration: none;
@@ -133,9 +133,9 @@
 	}
 
 	.navigation img {
-		width: 20px;
-		height: 20px;
-		flex: 0 0 20px;
+		width: 22px;
+		height: 22px;
+		flex: 0 0 22px;
 		opacity: 0.88;
 		transition: opacity 150ms ease;
 	}
