@@ -1,2 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<svelte:head>
+	<title>Gestión de prospectos | SOS Contador</title>
+</svelte:head>
+<h1> Gestión de prospectos</h1>
