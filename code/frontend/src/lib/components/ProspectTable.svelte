@@ -2,7 +2,7 @@
 	import { products, statuses } from '$lib/data/prospect-filters.js';
 	import EstadoBadge from './EstadoBadge.svelte';
 
-	let { prospects } = $props();
+	let { prospects, onSelectProspect } = $props();
 
 	/** @param {string} productId */
 	function getProductLabel(productId) {
@@ -59,7 +59,12 @@
 						<span>{prospect.lastInteraction.channel}</span>
 					</td>
 					<td>
-						<button class="detail-button" type="button" aria-label={`Ver detalle de ${prospect.name}`}>
+						<button
+							class="detail-button"
+							type="button"
+							aria-label={`Ver detalle de ${prospect.name}`}
+							onclick={() => onSelectProspect(prospect)}
+						>
 							›
 						</button>
 					</td>
@@ -71,7 +76,6 @@
 
 <style>
 	.tabla-prospectos {
-		margin-top: 20px;
 		overflow-x: auto;
 		border: 1px solid #eaecf0;
 		border-radius: 10px;

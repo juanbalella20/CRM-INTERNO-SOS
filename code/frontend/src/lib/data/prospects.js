@@ -9,7 +9,10 @@ export const prospects = [
 		],
 		origin: 'Web',
 		isCommerciallyExcluded: false,
-		lastInteraction: { date: '18/08/2026', channel: 'WhatsApp' }
+		lastInteraction: { date: '18/08/2026', channel: 'WhatsApp' },
+		nextAction: { title: 'Ofrecer el software de sueldos', dueDate: '20/08/2026' },
+		interactionSummary:
+			'Consultó por las funcionalidades de SOS Contador y solicitó información sobre la integración con sus procesos administrativos.'
 	},
 	{
 		id: 154,
@@ -18,7 +21,10 @@ export const prospects = [
 		opportunities: [{ productId: 'sos-sueldos', statusId: 'nuevo-prospecto' }],
 		origin: 'Web',
 		isCommerciallyExcluded: true,
-		lastInteraction: { date: '15/08/2026', channel: 'Mail' }
+		lastInteraction: { date: '15/08/2026', channel: 'Mail' },
+		nextAction: { title: 'Revisar la exclusión comercial', dueDate: '22/08/2026' },
+		interactionSummary:
+			'Solicitó asistencia para organizar el trabajo con comprobantes y facturas de ARCA. Se la excluyó temporalmente de acciones comerciales hasta definir el acompañamiento adecuado.'
 	},
 	{
 		id: 211,
@@ -30,7 +36,10 @@ export const prospects = [
 		],
 		origin: 'Llamadas',
 		isCommerciallyExcluded: false,
-		lastInteraction: { date: '16/08/2026', channel: 'Llamada' }
+		lastInteraction: { date: '16/08/2026', channel: 'Llamada' },
+		nextAction: { title: 'Enviar propuesta comercial', dueDate: '19/08/2026' },
+		interactionSummary:
+			'Manifestó interés en centralizar la gestión comercial y pidió una propuesta con los alcances de SOS CRM.'
 	},
 	{
 		id: 278,
@@ -39,7 +48,10 @@ export const prospects = [
 		opportunities: [{ productId: 'sos-contador', statusId: 'cerrada' }],
 		origin: 'Webinar',
 		isCommerciallyExcluded: false,
-		lastInteraction: { date: '12/08/2026', channel: 'Webinar' }
+		lastInteraction: { date: '12/08/2026', channel: 'Webinar' },
+		nextAction: { title: 'Coordinar una demostración', dueDate: '21/08/2026' },
+		interactionSummary:
+			'Participó del webinar de gestión de estudios y solicitó una demostración enfocada en el seguimiento de clientes.'
 	},
 	{
 		id: 342,
@@ -48,6 +60,9 @@ export const prospects = [
 		opportunities: [{ productId: 'sos-contador', statusId: 'propuesta-enviada' }],
 		origin: 'Bot Web',
 		isCommerciallyExcluded: false,
-		lastInteraction: { date: '10/08/2026', channel: 'Bot Web' }
+		lastInteraction: { date: '10/08/2026', channel: 'Bot Web' },
+		nextAction: { title: 'Confirmar interés en la propuesta', dueDate: '23/08/2026' },
+		interactionSummary:
+			'Ingresó una consulta desde el sitio web sobre planes y precios. Quedó pendiente confirmar qué solución se ajusta a su necesidad.'
 	}
 ];

@@ -6,6 +6,7 @@
 	import ProspectTable from '$lib/components/ProspectTable.svelte';
 	import { products, statuses } from '$lib/data/prospect-filters.js';
 	import { prospects } from '$lib/data/prospects.js';
+	import Detalle from '$lib/components/Detalle.svelte';
 
 	/** @type {string[]} */
 	let selectedStatuses = $state([]);
@@ -16,59 +17,87 @@
 			? selectedStatuses.filter((id) => id !== statusId)
 			: [...selectedStatuses, statusId];
 	}
+	/** @type {object | null} */
+	let prospectoSeleccionado= $state(null)
+
+	/** @param {object} prospect */
+	function  SeleccionarProspecto(prospect){
+		prospectoSeleccionado= prospect;
+	}
+
+	function cerrarDetalle(){
+		prospectoSeleccionado= null;
+	}
 
 </script>
 
 <section class="pagina-prospectos">
-	<form class="buscador">
-		<img class="buscador-icono" src="/images/search-icon.svg" alt="" aria-hidden="true" />
-		<input
-			type="search"
-			aria-label="Buscar prospectos"
-			placeholder="Buscar por nombre, correo o ID..."
-		/>
-	</form>
+	<div class="contenido-principal">
+		<form class="buscador">
+			<img class="buscador-icono" src="/images/search-icon.svg" alt="" aria-hidden="true" />
+			<input
+				type="search"
+				aria-label="Buscar prospectos"
+				placeholder="Buscar por nombre, correo o ID..."
+			/>
+		</form>
 
-	<div class="filtros">
-		<div class="filtros-productos">
-			<label for="producto">Productos</label>
-			<select id="producto">
-				<option value="">Todos los productos</option>
-				{#each products as product}
-					<option value={product.id}>{product.label}</option>
-				{/each}
-			</select>
-		</div>
+		<div class="filtros">
+			<div class="filtros-productos">
+				<label for="producto">Productos</label>
+				<select id="producto">
+					<option value="">Todos los productos</option>
+					{#each products as product}
+						<option value={product.id}>{product.label}</option>
+					{/each}
+				</select>
+			</div>
 
-		<div class="filtros-estado">
-			<p>Filtrar por estado</p>
+			<div class="filtros-estado">
+				<p>Filtrar por estado</p>
 
-			<div class="estados">
-				{#each statuses as status}
-					<button
-						type="button"
-						class:seleccionado={selectedStatuses.includes(status.id)}
-						data-status={status.id}
-						aria-pressed={selectedStatuses.includes(status.id)}
-						onclick={() => toggleStatus(status.id)}
-					>
-						<span class="estado-punto" aria-hidden="true"></span>
-						{status.label}
-					</button>
-				{/each}
+				<div class="estados">
+					{#each statuses as status}
+						<button
+							type="button"
+							class:seleccionado={selectedStatuses.includes(status.id)}
+							data-status={status.id}
+							aria-pressed={selectedStatuses.includes(status.id)}
+							onclick={() => toggleStatus(status.id)}
+						>
+							<span class="estado-punto" aria-hidden="true"></span>
+							{status.label}
+						</button>
+					{/each}
+				</div>
 			</div>
 		</div>
 
+		<div class="tabla-contenedor">
+			<ProspectTable prospects={prospects} onSelectProspect={SeleccionarProspecto} />
+		</div>
 	</div>
 
-	<ProspectTable {prospects} />
+
+	{#if prospectoSeleccionado}
+		<Detalle prospect={prospectoSeleccionado} onClose={cerrarDetalle} />
+	{/if}
 
 </section>
 
 <style>
 	.pagina-prospectos {
-		padding: 24px 26px;
+		min-height: calc(100vh - 76px);
+		display: flex;
+		align-items: stretch;
 		background-color: #f8fafc;
+	}
+
+	.contenido-principal {
+		box-sizing: border-box;
+		flex: 1;
+		min-width: 0;
+		padding: 24px 26px;
 	}
 
 	.buscador {
@@ -222,9 +251,17 @@
 		background-color: #059669;
 	}
 
+	.tabla-contenedor {
+		margin-top: 20px;
+	}
+
 
 	@media (max-width: 640px) {
 		.pagina-prospectos {
+			flex-direction: column;
+		}
+
+		.contenido-principal {
 			padding: 16px;
 		}
 
@@ -237,5 +274,6 @@
 			flex-direction: column;
 			gap: 16px;
 		}
+
 	}
 </style>
