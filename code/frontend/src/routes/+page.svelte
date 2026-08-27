@@ -3,6 +3,7 @@
 </svelte:head>
 
 <script>
+	import ProspectTable from '$lib/components/ProspectTable.svelte';
 	import { products, statuses } from '$lib/data/prospect-filters.js';
 	import { prospects } from '$lib/data/prospects.js';
 
@@ -16,15 +17,6 @@
 			: [...selectedStatuses, statusId];
 	}
 
-	/** @param {string} productId */
-	function getProductLabel(productId) {
-		return products.find((product) => product.id === productId)?.label;
-	}
-
-	/** @param {string} statusId */
-	function getStatusLabel(statusId) {
-		return statuses.find((status) => status.id === statusId)?.label;
-	}
 </script>
 
 <section class="pagina-prospectos">
@@ -41,7 +33,10 @@
 		<div class="filtros-productos">
 			<label for="producto">Productos</label>
 			<select id="producto">
-				<option>Todos los productos</option>
+				<option value="">Todos los productos</option>
+				{#each products as product}
+					<option value={product.id}>{product.label}</option>
+				{/each}
 			</select>
 		</div>
 
@@ -66,54 +61,7 @@
 
 	</div>
 
-	<div class="tabla-prospectos">
-		<table>
-			<thead>
-				<tr>
-					<th scope="col">ID</th>
-					<th scope="col">Nombre</th>
-					<th scope="col">Correo</th>
-					<th scope="col">Oportunidades</th>
-					<th scope="col">Origen</th>
-					<th scope="col">Exclusión comercial</th>
-					<th scope="col">Última interacción</th>
-					<th scope="col">Acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each prospects as prospect (prospect.id)}
-					<tr>
-						<td>{prospect.id}</td>
-						<td>{prospect.name}</td>
-						<td>{prospect.email}</td>
-						<td>
-							<ul>
-								{#each prospect.opportunities as opportunity}
-									<li>
-										{getProductLabel(opportunity.productId)} —
-										{getStatusLabel(opportunity.statusId)}
-									</li>
-								{/each}
-							</ul>
-						</td>
-						<td>{prospect.origin}</td>
-						<td>{prospect.isCommerciallyExcluded ? 'Excluido' : '—'}</td>
-						<td>
-							{prospect.lastInteraction.date}
-							<br />
-							{prospect.lastInteraction.channel}
-						</td>
-						<td>
-							<button type="button" aria-label={`Ver detalle de ${prospect.name}`}>
-								Ver detalle
-							</button>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-
-	</div>
+	<ProspectTable {prospects} />
 
 </section>
 
@@ -154,7 +102,7 @@
 		color: #344054;
 		background: transparent;
 		font: inherit;
-		font-size: 14px;
+		font-size: 15px;
 	}
 
 	.buscador input::placeholder {
@@ -176,7 +124,7 @@
 
 	.filtros-productos label {
 		color: #475467;
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 600;
 	}
 
@@ -190,7 +138,7 @@
 		color: #344054;
 		background-color: #ffffff;
 		font: inherit;
-		font-size: 13px;
+		font-size: 14px;
 		cursor: pointer;
 	}
 
@@ -208,7 +156,7 @@
 	.filtros-estado p {
 		margin: 0;
 		color: #475467;
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 600;
 	}
 
@@ -229,7 +177,7 @@
 		color: #344054;
 		background-color: #ffffff;
 		font: inherit;
-		font-size: 13px;
+		font-size: 14px;
 		cursor: pointer;
 	}
 
@@ -273,6 +221,7 @@
 	[data-status='cerrada'] .estado-punto {
 		background-color: #059669;
 	}
+
 
 	@media (max-width: 640px) {
 		.pagina-prospectos {

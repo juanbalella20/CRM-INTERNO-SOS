@@ -129,14 +129,14 @@
 
 	.user-name {
 		color: #344054;
-		font-size: 13px;
+		font-size: 14px;
 		font-weight: 700;
 	}
 
 	.user-role {
 		margin-top: 2px;
 		color: #667085;
-		font-size: 10px;
+		font-size: 11px;
 	}
 
 </style>
