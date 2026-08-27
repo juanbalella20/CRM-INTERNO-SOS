@@ -67,8 +67,8 @@
 	}
 
 	.brand img {
-		width: 52px;
-		height: 52px;
+		width: 65px;
+		height: 65x;
 		object-fit: contain;
 	}
 
