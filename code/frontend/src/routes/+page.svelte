@@ -3,7 +3,8 @@
 </svelte:head>
 
 <script>
-	import { statuses } from '$lib/data/prospect-filters.js';
+	import { products, statuses } from '$lib/data/prospect-filters.js';
+	import { prospects } from '$lib/data/prospects.js';
 
 	/** @type {string[]} */
 	let selectedStatuses = $state([]);
@@ -13,6 +14,16 @@
 		selectedStatuses = selectedStatuses.includes(statusId)
 			? selectedStatuses.filter((id) => id !== statusId)
 			: [...selectedStatuses, statusId];
+	}
+
+	/** @param {string} productId */
+	function getProductLabel(productId) {
+		return products.find((product) => product.id === productId)?.label;
+	}
+
+	/** @param {string} statusId */
+	function getStatusLabel(statusId) {
+		return statuses.find((status) => status.id === statusId)?.label;
 	}
 </script>
 
@@ -54,6 +65,56 @@
 		</div>
 
 	</div>
+
+	<div class="tabla-prospectos">
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Correo</th>
+					<th scope="col">Oportunidades</th>
+					<th scope="col">Origen</th>
+					<th scope="col">Exclusión comercial</th>
+					<th scope="col">Última interacción</th>
+					<th scope="col">Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each prospects as prospect (prospect.id)}
+					<tr>
+						<td>{prospect.id}</td>
+						<td>{prospect.name}</td>
+						<td>{prospect.email}</td>
+						<td>
+							<ul>
+								{#each prospect.opportunities as opportunity}
+									<li>
+										{getProductLabel(opportunity.productId)} —
+										{getStatusLabel(opportunity.statusId)}
+									</li>
+								{/each}
+							</ul>
+						</td>
+						<td>{prospect.origin}</td>
+						<td>{prospect.isCommerciallyExcluded ? 'Excluido' : '—'}</td>
+						<td>
+							{prospect.lastInteraction.date}
+							<br />
+							{prospect.lastInteraction.channel}
+						</td>
+						<td>
+							<button type="button" aria-label={`Ver detalle de ${prospect.name}`}>
+								Ver detalle
+							</button>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+
+	</div>
+
 </section>
 
 <style>
