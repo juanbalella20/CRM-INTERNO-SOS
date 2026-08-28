@@ -10,7 +10,7 @@ export const prospects = [
 		origin: 'Web',
 		isCommerciallyExcluded: false,
 		lastInteraction: { date: '18/08/2026', channel: 'WhatsApp' },
-		nextAction: { title: 'Ofrecer el software de sueldos', dueDate: '20/08/2026' },
+		nextAction: { title: 'Ofrecer el software de sueldos', dueDate: '20/09/2026' },
 		interactionSummary:
 			'Consultó por las funcionalidades de SOS Contador y solicitó información sobre la integración con sus procesos administrativos.'
 	},

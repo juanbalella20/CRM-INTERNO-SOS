@@ -10,6 +10,10 @@
 
 	/** @type {string[]} */
 	let selectedStatuses = $state([]);
+	/** @type {string} */
+	let selectedProduct = $state('');
+	/** @type {string} */
+	let searchQuery = $state('');
 	/** @type {'id' | 'name' | 'lastInteraction' | 'nextAction' | null} */
 	let sortField = $state(null);
 	/** @type {'asc' | 'desc'} */
@@ -20,6 +24,29 @@
 		selectedStatuses = selectedStatuses.includes(statusId)
 			? selectedStatuses.filter((id) => id !== statusId)
 			: [...selectedStatuses, statusId];
+	}
+
+	/** @param {(typeof prospects)[number]} prospect */
+	function matchesFilters(prospect) {
+		const opportunities = selectedProduct
+			? prospect.opportunities.filter((o) => o.productId === selectedProduct)
+			: prospect.opportunities;
+
+		if (selectedProduct && opportunities.length === 0) return false;
+		if (selectedStatuses.length > 0 && !opportunities.some((o) => selectedStatuses.includes(o.statusId))) {
+			return false;
+		}
+
+		if (searchQuery.trim()) {
+			const query = searchQuery.trim().toLowerCase();
+			const matchesSearch =
+				String(prospect.id).toLowerCase().includes(query) ||
+				prospect.name.toLowerCase().includes(query) ||
+				prospect.email.toLowerCase().includes(query);
+			if (!matchesSearch) return false;
+		}
+
+		return true;
 	}
 
 	/** @param {string} date */
@@ -39,21 +66,13 @@
 		sortDirection = 'asc';
 	}
 
-	function sortByUpcomingActions() {
-		if (sortField === 'nextAction') {
-			sortField = null;
-			return;
-		}
-
-		sortField = 'nextAction';
-		sortDirection = 'asc';
-	}
+	let filteredProspects = $derived(prospects.filter(matchesFilters));
 
 	let orderedProspects = $derived.by(() => {
-		if (!sortField) return prospects;
+		if (!sortField) return filteredProspects;
 
 		const direction = sortDirection === 'asc' ? 1 : -1;
-		return [...prospects].sort((first, second) => {
+		return [...filteredProspects].sort((first, second) => {
 			if (sortField === 'id' || sortField === 'name') {
 				return String(first[sortField]).localeCompare(String(second[sortField]), 'es', { numeric: true }) * direction;
 			}
@@ -83,31 +102,20 @@
 
 <section class="pagina-prospectos">
 	<div class="contenido-principal">
-		<form class="buscador">
+		<form class="buscador" onsubmit={(e) => e.preventDefault()}>
 			<img class="buscador-icono" src="/images/search-icon.svg" alt="" aria-hidden="true" />
 			<input
 				type="search"
 				aria-label="Buscar prospectos"
 				placeholder="Buscar por nombre, correo o ID..."
+				bind:value={searchQuery}
 			/>
 		</form>
-
-		<div class="filtros-avanzados">
-			<button
-				class:seleccionado={sortField === 'nextAction'}
-				type="button"
-				aria-pressed={sortField === 'nextAction'}
-				onclick={sortByUpcomingActions}
-			>
-				Próximas acciones a vencer
-				<span aria-hidden="true">↑</span>
-			</button>
-		</div>
 
 		<div class="filtros">
 			<div class="filtros-productos">
 				<label for="producto">Productos</label>
-				<select id="producto">
+				<select id="producto" bind:value={selectedProduct}>
 					<option value="">Todos los productos</option>
 					{#each products as product}
 						<option value={product.id}>{product.label}</option>

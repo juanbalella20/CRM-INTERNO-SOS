@@ -37,7 +37,7 @@
 				<th scope="col" aria-sort={sortField === 'name' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'name'} class="sort-button" type="button" aria-label="Ordenar por nombre" onclick={() => onSort('name')}>Nombre <span class="sort-icon" aria-hidden="true">{sortField === 'name' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Correo</th>
 				<th scope="col">Oportunidades</th>
-				<th scope="col">Proxima accion a vencer</th>
+				<th scope="col" aria-sort={sortField === 'nextAction' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'nextAction'} class="sort-button" type="button" aria-label="Ordenar por próxima acción a vencer" onclick={() => onSort('nextAction')}>Próxima acción a vencer <span class="sort-icon" aria-hidden="true">{sortField === 'nextAction' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Exclusión comercial</th>
 				<th scope="col" aria-sort={sortField === 'lastInteraction' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'lastInteraction'} class="sort-button" type="button" aria-label="Ordenar por última interacción" onclick={() => onSort('lastInteraction')}>Última interacción <span class="sort-icon" aria-hidden="true">{sortField === 'lastInteraction' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Acciones</th>
