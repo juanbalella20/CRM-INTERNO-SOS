@@ -10,6 +10,10 @@
 
 	/** @type {string[]} */
 	let selectedStatuses = $state([]);
+	/** @type {'id' | 'name' | 'lastInteraction' | 'nextAction' | null} */
+	let sortField = $state(null);
+	/** @type {'asc' | 'desc'} */
+	let sortDirection = $state('asc');
 
 	/** @param {string} statusId */
 	function toggleStatus(statusId) {
@@ -17,6 +21,52 @@
 			? selectedStatuses.filter((id) => id !== statusId)
 			: [...selectedStatuses, statusId];
 	}
+
+	/** @param {string} date */
+	function getDateTimestamp(date) {
+		const [day, month, year] = date.split('/').map(Number);
+		return new Date(year, month - 1, day).getTime();
+	}
+
+	/** @param {'id' | 'name' | 'lastInteraction' | 'nextAction'} field */
+	function sortBy(field) {
+		if (sortField === field) {
+			sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+			return;
+		}
+
+		sortField = field;
+		sortDirection = 'asc';
+	}
+
+	function sortByUpcomingActions() {
+		if (sortField === 'nextAction') {
+			sortField = null;
+			return;
+		}
+
+		sortField = 'nextAction';
+		sortDirection = 'asc';
+	}
+
+	let orderedProspects = $derived.by(() => {
+		if (!sortField) return prospects;
+
+		const direction = sortDirection === 'asc' ? 1 : -1;
+		return [...prospects].sort((first, second) => {
+			if (sortField === 'id' || sortField === 'name') {
+				return String(first[sortField]).localeCompare(String(second[sortField]), 'es', { numeric: true }) * direction;
+			}
+
+			const firstDate = sortField === 'lastInteraction'
+				? getDateTimestamp(first.lastInteraction.date)
+				: getDateTimestamp(first.nextAction.dueDate);
+			const secondDate = sortField === 'lastInteraction'
+				? getDateTimestamp(second.lastInteraction.date)
+				: getDateTimestamp(second.nextAction.dueDate);
+			return (firstDate - secondDate) * direction;
+		});
+	});
 	/** @type {object | null} */
 	let prospectoSeleccionado= $state(null)
 
@@ -41,6 +91,18 @@
 				placeholder="Buscar por nombre, correo o ID..."
 			/>
 		</form>
+
+		<div class="filtros-avanzados">
+			<button
+				class:seleccionado={sortField === 'nextAction'}
+				type="button"
+				aria-pressed={sortField === 'nextAction'}
+				onclick={sortByUpcomingActions}
+			>
+				Próximas acciones a vencer
+				<span aria-hidden="true">↑</span>
+			</button>
+		</div>
 
 		<div class="filtros">
 			<div class="filtros-productos">
@@ -73,7 +135,13 @@
 		</div>
 
 		<div class="tabla-contenedor">
-			<ProspectTable prospects={prospects} onSelectProspect={SeleccionarProspecto} />
+			<ProspectTable
+				prospects={orderedProspects}
+				onSelectProspect={SeleccionarProspecto}
+				{sortField}
+				{sortDirection}
+				onSort={sortBy}
+			/>
 		</div>
 	</div>
 
@@ -137,10 +205,42 @@
 		color: #98a2b3;
 	}
 
+	.filtros-avanzados {
+		width: fit-content;
+		margin-top: 16px;
+	}
+
+	.filtros-avanzados button {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		height: 36px;
+		padding: 0 12px;
+		border: 1px solid #d0d5dd;
+		border-radius: 6px;
+		color: #344054;
+		background-color: #ffffff;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.filtros-avanzados button:hover {
+		border-color: #98a2b3;
+		background-color: #f9fafb;
+	}
+
+	.filtros-avanzados button.seleccionado {
+		border-color: #a30c11;
+		color: #a30c11;
+		background-color: #fff5f5;
+	}
+
 	.filtros {
 		margin-top: 16px;
 		display: flex;
-		align-items: flex-end;
+		align-items: flex-start;
 		gap: 24px;
 	}
 

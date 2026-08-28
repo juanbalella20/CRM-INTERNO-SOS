@@ -2,7 +2,7 @@
 	import { products, statuses } from '$lib/data/prospect-filters.js';
 	import EstadoBadge from './EstadoBadge.svelte';
 
-	let { prospects, onSelectProspect } = $props();
+	let { prospects, onSelectProspect, sortField, sortDirection, onSort } = $props();
 
 	/** @param {string} productId */
 	function getProductLabel(productId) {
@@ -24,13 +24,13 @@
 	<table>
 		<thead>
 			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Nombre</th>
+				<th scope="col" aria-sort={sortField === 'id' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'id'} class="sort-button" type="button" aria-label="Ordenar por ID" onclick={() => onSort('id')}>ID <span class="sort-icon" aria-hidden="true">{sortField === 'id' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
+				<th scope="col" aria-sort={sortField === 'name' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'name'} class="sort-button" type="button" aria-label="Ordenar por nombre" onclick={() => onSort('name')}>Nombre <span class="sort-icon" aria-hidden="true">{sortField === 'name' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Correo</th>
 				<th scope="col">Oportunidades</th>
 				<th scope="col">Origen</th>
 				<th scope="col">Exclusión comercial</th>
-				<th scope="col">Última interacción</th>
+				<th scope="col" aria-sort={sortField === 'lastInteraction' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'lastInteraction'} class="sort-button" type="button" aria-label="Ordenar por última interacción" onclick={() => onSort('lastInteraction')}>Última interacción <span class="sort-icon" aria-hidden="true">{sortField === 'lastInteraction' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Acciones</th>
 			</tr>
 		</thead>
@@ -102,6 +102,44 @@
 		font-weight: 600;
 		text-align: left;
 		white-space: nowrap;
+	}
+
+	.sort-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		padding: 0;
+		border: 0;
+		color: inherit;
+		background: transparent;
+		font: inherit;
+		font-weight: inherit;
+		cursor: pointer;
+	}
+
+	.sort-button:hover {
+		color: #344054;
+	}
+
+	.sort-button.activo {
+		color: #a30c11;
+	}
+
+	.sort-button.activo .sort-icon {
+		color: currentColor;
+	}
+
+	.sort-button:focus-visible {
+		outline: 2px solid #a30c11;
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.sort-icon {
+		color: #98a2b3;
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: -3px;
 	}
 
 	td {
