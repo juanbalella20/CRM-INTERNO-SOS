@@ -37,7 +37,7 @@ export const prospects = [
 		origin: 'Llamadas',
 		isCommerciallyExcluded: false,
 		lastInteraction: { date: '16/08/2026', channel: 'Llamada' },
-		nextAction: { title: 'Enviar propuesta comercial', dueDate: '19/08/2026' },
+		nextAction: { title: 'Enviar propuesta comercial', dueDate: '31/08/2026' },
 		interactionSummary:
 			'Manifestó interés en centralizar la gestión comercial y pidió una propuesta con los alcances de SOS CRM.'
 	},
@@ -49,7 +49,7 @@ export const prospects = [
 		origin: 'Webinar',
 		isCommerciallyExcluded: false,
 		lastInteraction: { date: '12/08/2026', channel: 'Webinar' },
-		nextAction: { title: 'Coordinar una demostración', dueDate: '21/08/2026' },
+		nextAction: { title: 'Coordinar una demostración', dueDate: '29/08/2026' },
 		interactionSummary:
 			'Participó del webinar de gestión de estudios y solicitó una demostración enfocada en el seguimiento de clientes.'
 	},

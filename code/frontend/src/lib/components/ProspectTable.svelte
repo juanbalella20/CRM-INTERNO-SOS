@@ -18,6 +18,15 @@
 	function getStatusColor(statusId) {
 		return statuses.find((status) => status.id === statusId)?.color;
 	}
+
+	/** @param {string} dueDate */
+	function getDaysUntil(dueDate) {
+		const [day, month, year] = dueDate.split('/').map(Number);
+		const due = new Date(year, month - 1, day);
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		return Math.round((due.getTime() - today.getTime()) / 86400000);
+	}
 </script>
 
 <div class="tabla-prospectos">
@@ -28,7 +37,7 @@
 				<th scope="col" aria-sort={sortField === 'name' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'name'} class="sort-button" type="button" aria-label="Ordenar por nombre" onclick={() => onSort('name')}>Nombre <span class="sort-icon" aria-hidden="true">{sortField === 'name' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Correo</th>
 				<th scope="col">Oportunidades</th>
-				<th scope="col">Origen</th>
+				<th scope="col">Proxima accion a vencer</th>
 				<th scope="col">Exclusión comercial</th>
 				<th scope="col" aria-sort={sortField === 'lastInteraction' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}><button class:activo={sortField === 'lastInteraction'} class="sort-button" type="button" aria-label="Ordenar por última interacción" onclick={() => onSort('lastInteraction')}>Última interacción <span class="sort-icon" aria-hidden="true">{sortField === 'lastInteraction' ? (sortDirection === 'asc' ? '↑' : '↓') : '↑↓'}</span></button></th>
 				<th scope="col">Acciones</th>
@@ -53,7 +62,16 @@
 							{/each}
 						</ul>
 					</td>
-					<td>{prospect.origin}</td>
+					<td class="vence-en">
+						{#if prospect.nextAction}
+							{@const dias = getDaysUntil(prospect.nextAction.dueDate)}
+							<span class="dias-restantes">
+								{dias < 0 ? `Vencida hace ${Math.abs(dias)}d` : dias === 0 ? 'Vence hoy' : `${dias}d`}
+							</span>
+						{:else}
+							—
+						{/if}
+					</td>
 					<td>
 						<span class:commercially-excluded={prospect.isCommerciallyExcluded}>
 							{prospect.isCommerciallyExcluded ? 'Excluido' : '—'}
@@ -171,6 +189,11 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+
+	.dias-restantes {
+		font-weight: 600;
+		color: #b42318;
 	}
 
 	.commercially-excluded {
