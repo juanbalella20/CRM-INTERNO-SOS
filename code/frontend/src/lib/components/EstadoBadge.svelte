@@ -1,9 +1,9 @@
 <script>
-	let { productLabel, statusLabel, statusId } = $props();
+	let { productLabel, statusLabel, statusColor } = $props();
 </script>
 
-<span class="estado-badge" data-status={statusId}>
-	<span class="estado-punto" aria-hidden="true"></span>
+<span class="estado-badge">
+	<span class="estado-punto" style:background-color={statusColor} aria-hidden="true"></span>
 	{productLabel} · {statusLabel}
 </span>
 
@@ -29,23 +29,4 @@
 		background-color: #667085;
 	}
 
-	[data-status='nuevo-prospecto'] .estado-punto {
-		background-color: #2563eb;
-	}
-
-	[data-status='contactado'] .estado-punto {
-		background-color: #0891b2;
-	}
-
-	[data-status='interesado'] .estado-punto {
-		background-color: #7c3aed;
-	}
-
-	[data-status='propuesta-enviada'] .estado-punto {
-		background-color: #d97706;
-	}
-
-	[data-status='cerrada'] .estado-punto {
-		background-color: #059669;
-	}
 </style>

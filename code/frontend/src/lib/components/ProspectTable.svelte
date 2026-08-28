@@ -13,6 +13,11 @@
 	function getStatusLabel(statusId) {
 		return statuses.find((status) => status.id === statusId)?.label;
 	}
+
+	/** @param {string} statusId */
+	function getStatusColor(statusId) {
+		return statuses.find((status) => status.id === statusId)?.color;
+	}
 </script>
 
 <div class="tabla-prospectos">
@@ -42,7 +47,7 @@
 									<EstadoBadge
 										productLabel={getProductLabel(opportunity.productId)}
 										statusLabel={getStatusLabel(opportunity.statusId)}
-										statusId={opportunity.statusId}
+										statusColor={getStatusColor(opportunity.statusId)}
 									/>
 								</li>
 							{/each}

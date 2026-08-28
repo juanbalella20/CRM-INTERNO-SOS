@@ -61,11 +61,10 @@
 						<button
 							type="button"
 							class:seleccionado={selectedStatuses.includes(status.id)}
-							data-status={status.id}
 							aria-pressed={selectedStatuses.includes(status.id)}
 							onclick={() => toggleStatus(status.id)}
 						>
-							<span class="estado-punto" aria-hidden="true"></span>
+							<span class="estado-punto" style:background-color={status.color} aria-hidden="true"></span>
 							{status.label}
 						</button>
 					{/each}
@@ -229,26 +228,6 @@
 		height: 7px;
 		border-radius: 50%;
 		background-color: #667085;
-	}
-
-	[data-status='nuevo-prospecto'] .estado-punto {
-		background-color: #2563eb;
-	}
-
-	[data-status='contactado'] .estado-punto {
-		background-color: #0891b2;
-	}
-
-	[data-status='interesado'] .estado-punto {
-		background-color: #7c3aed;
-	}
-
-	[data-status='propuesta-enviada'] .estado-punto {
-		background-color: #d97706;
-	}
-
-	[data-status='cerrada'] .estado-punto {
-		background-color: #059669;
 	}
 
 	.tabla-contenedor {
