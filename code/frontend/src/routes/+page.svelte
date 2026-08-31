@@ -7,6 +7,7 @@
 	import { products, statuses } from '$lib/data/prospect-filters.js';
 	import { prospects } from '$lib/data/prospects.js';
 	import Detalle from '$lib/components/Detalle.svelte';
+	import ProspectForm from '$lib/components/ProspectForm.svelte';
 
 	/** @type {string[]} */
 	let selectedStatuses = $state([]);
@@ -141,6 +142,8 @@
 				</div>
 			</div>
 		</div>
+
+		<button id="agregar-prospecto" type="button" aria-label="Agregar prospecto " >+</button>
 
 		<div class="tabla-contenedor">
 			<ProspectTable
