@@ -213,38 +213,6 @@
 		color: #98a2b3;
 	}
 
-	.filtros-avanzados {
-		width: fit-content;
-		margin-top: 16px;
-	}
-
-	.filtros-avanzados button {
-		display: inline-flex;
-		align-items: center;
-		gap: 7px;
-		height: 36px;
-		padding: 0 12px;
-		border: 1px solid #d0d5dd;
-		border-radius: 6px;
-		color: #344054;
-		background-color: #ffffff;
-		font: inherit;
-		font-size: 13px;
-		font-weight: 600;
-		cursor: pointer;
-	}
-
-	.filtros-avanzados button:hover {
-		border-color: #98a2b3;
-		background-color: #f9fafb;
-	}
-
-	.filtros-avanzados button.seleccionado {
-		border-color: #a30c11;
-		color: #a30c11;
-		background-color: #fff5f5;
-	}
-
 	.filtros {
 		margin-top: 16px;
 		display: flex;
